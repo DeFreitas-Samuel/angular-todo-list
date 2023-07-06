@@ -1,0 +1,15 @@
+<h1>Create a new task</h1>
+<form [formGroup]="taskForm" (ngSubmit)="onCreateTask()">
+    <label for="name">Name</label>
+    <input id="name" formControlName="name">
+    <label for="due-date">Due Date</label>
+    <input type="datetime-local" id="due-date" formControlName="dueDate">
+    <label for="priority">Priority</label>
+    <select id="priority" formControlName="priority">
+        <option value="">--Please choose an option--</option>
+        <option *ngFor="let priority of priorities" value="{{priority}}">{{priority}}</option>
+    </select>
+
+
+    <button type="submit">Submit</button>
+</form>
