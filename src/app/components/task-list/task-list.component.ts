@@ -10,7 +10,7 @@ import { Task } from 'src/models/task';
 })
 export class TaskListComponent implements OnInit {
 
-  listOfTasks!: Observable<Task[]>;
+  listOfTasks$!: Observable<Task[]>;
 
 
   constructor(private taskService: TaskService) { }
@@ -20,22 +20,7 @@ export class TaskListComponent implements OnInit {
   }
 
   private bootstrap(): void {
-    this.listOfTasks = this.taskService.tasks$;
+    this.listOfTasks$ = this.taskService.tasks$;
   }
 
-  // destroyer$: Subject<null> = new Subject<null>();
-  // ngOnInit(): void {
-  //   this.taskService.tasks$
-  //     .pipe(
-  //       takeUntil(this.destroyer$)
-  //     )
-  //     .subscribe((list) => {
-  //       this.listOfTasks = list;
-  //     })
-  // }
-
-  // ngOnDestroy(): void {
-  //   this.destroyer$.next(null);
-  //   this.destroyer$.complete();
-  // }
 }

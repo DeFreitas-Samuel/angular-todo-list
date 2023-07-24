@@ -1,3 +1,18 @@
-<div *ngFor="let task of listOfTasks|async">
-    <p>{{task.name}}</p>
+<div *ngIf="listOfTasks$|async as listOfTask; else loading">
+  <div *ngIf="listOfTask.length > 0; else noTasks">
+    <div *ngFor="let task of listOfTask">
+      <p>{{task.name}}</p>
+    </div>
+  </div>
+
+  <ng-template #noTasks>
+    There are not current tasks.
+  </ng-template>
+
+  <a routerLink="create-task">Test</a>
 </div>
+
+
+<ng-template #loading>
+  Invoices are loading...
+</ng-template>
