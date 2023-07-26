@@ -6,13 +6,13 @@
   </div>
 
   <ng-template #noTasks>
-    There are not current tasks.
+    <h2>There are not current tasks.</h2>
+    <a routerLink="create-task">Add a new one</a>
   </ng-template>
 
-  <a routerLink="create-task">Test</a>
 </div>
 
 
 <ng-template #loading>
-  Invoices are loading...
+  Tasks are loading...
 </ng-template>
