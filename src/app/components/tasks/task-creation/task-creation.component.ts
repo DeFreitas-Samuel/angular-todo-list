@@ -23,6 +23,10 @@ export class TaskCreationComponent {
 
   constructor(private fb: FormBuilder, private taskService: TaskService, private router: Router) { }
 
+  public get priority(): typeof priority {
+    return priority;
+  }
+
   public onCreateTask() {
     console.log(this.taskForm.value);
     const newTask = this.convertFormValueToTask(this.taskForm.value);
