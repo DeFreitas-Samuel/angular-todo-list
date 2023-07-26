@@ -44,7 +44,7 @@ export class TaskCreationComponent {
     const formPriority: priority = formValue?.priority;
     const currentDate = (new Date()).toISOString();
 
-    const newTask: Task = { name: formName, dueDate: formDueDate, priority: formPriority, createdDate: currentDate, done: false, subtasks: [] }
+    const newTask: Task = { title: formName, dueDate: formDueDate, priority: formPriority, createdDate: currentDate, isDone: false, subtasks: [] }
     return newTask;
   }
 

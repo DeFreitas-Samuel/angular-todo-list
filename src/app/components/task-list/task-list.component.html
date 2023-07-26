@@ -1,7 +1,8 @@
 <div *ngIf="listOfTasks$|async as listOfTask; else loading">
+
   <div *ngIf="listOfTask.length > 0; else noTasks">
     <div *ngFor="let task of listOfTask">
-      <p>{{task.name}}</p>
+      <p>{{task.title}}</p>
     </div>
   </div>
 

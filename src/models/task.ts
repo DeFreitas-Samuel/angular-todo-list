@@ -1,10 +1,10 @@
-import { priority } from "./enums/priority.enum";
+import {priority} from "./enums/priority.enum";
 
-export interface Task {
-    name:string;
-    dueDate:string;
-    priority:priority;
-    createdDate: string;
-    done: boolean;
-    subtasks: Task[];
+export class Task {
+    title:string = "";
+    dueDate:string = "";
+    priority:priority = priority.Low;
+    createdDate: string = "";
+    isDone: boolean = false;
+    subtasks: Task[] = [];
 }
