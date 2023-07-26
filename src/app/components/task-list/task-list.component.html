@@ -2,7 +2,12 @@
 
   <div *ngIf="listOfTask.length > 0; else noTasks">
     <div *ngFor="let task of listOfTask">
-      <p>{{task.title}}</p>
+      <section>
+        <input type="checkbox" (click)="changeTaskToDone()">
+        <p>{{task.title}}</p>
+      </section>
+
+      
     </div>
   </div>
 

@@ -23,4 +23,7 @@ export class TaskListComponent implements OnInit {
     this.listOfTasks$ = this.taskService.tasks$;
   }
 
+  public changeTaskToDone(){
+    
+  }
 }

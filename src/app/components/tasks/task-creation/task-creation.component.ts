@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { priority } from 'src/models/enums/priority.enum';
 import { TaskService } from 'src/services/task.service';
 import { Task } from 'src/models/task';
@@ -16,9 +16,9 @@ export class TaskCreationComponent {
   public priorities: string[] = Object.values(priority);
 
   public taskForm = this.fb.group({
-    name: [''],
-    dueDate: [priority.Medium],
-    priority: [''],
+    name: ['', Validators.required],
+    dueDate: [priority.Medium, Validators.required],
+    priority: ['',  Validators.required],
   });
 
   constructor(private fb: FormBuilder, private taskService: TaskService, private router: Router) { }
@@ -46,6 +46,9 @@ export class TaskCreationComponent {
 
     const newTask: Task = { title: formName, dueDate: formDueDate, priority: formPriority, createdDate: currentDate, isDone: false, subtasks: [] }
     return newTask;
+
+
+    
   }
 
 

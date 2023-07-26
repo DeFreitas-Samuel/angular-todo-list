@@ -1,9 +1,9 @@
 <h1>Create a new task</h1>
-<form [formGroup]="taskForm" (ngSubmit)="onCreateTask()">
+<form class="d-flex flex-column" [formGroup]="taskForm" (ngSubmit)="onCreateTask()">
     <label for="name">Name</label>
-    <input id="name" formControlName="name">
+    <input id="name" formControlName="name" autocomplete="off">
     <label for="due-date">Due Date</label>
-    <input type="datetime-local" id="due-date" formControlName="dueDate">
+    <input type="datetime-local" id="due-date" formControlName="dueDate" autocomplete="off">
     <label for="priority">Priority</label>
     <select id="priority" formControlName="priority">
         <option value="">--Please choose an option--</option>
@@ -11,7 +11,7 @@
     </select>
 
 
-    <button type="submit">Submit</button>
+    <button type="submit" [disabled]="!taskForm.valid">Submit</button>
 </form>
 
 <!-- 
