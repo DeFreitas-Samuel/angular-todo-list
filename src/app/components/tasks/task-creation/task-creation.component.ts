@@ -40,11 +40,13 @@ export class TaskCreationComponent {
   private convertFormValueToTask(formValue: any): Task {
 
     const formName = formValue?.name;
-    const formDueDate = formValue?.dueDate;
+    const formDueDate = new Date(formValue?.dueDate);
     const formPriority: priority = formValue?.priority;
-    const currentDate = (new Date()).toISOString();
+    const currentDate = new Date();
 
-    const newTask: Task = { title: formName, dueDate: formDueDate, priority: formPriority, createdDate: currentDate, isDone: false, subtasks: [] }
+
+
+    const newTask = new Task(); 
     return newTask;
 
 

@@ -1,24 +1,33 @@
-<div *ngIf="listOfTasks$|async as listOfTask; else loading">
-
+<div *ngIf="listOfTasks$ | async as listOfTask; else loading">
   <div *ngIf="listOfTask.length > 0; else noTasks">
     <div *ngFor="let task of listOfTask">
-      <section>
-        <input type="checkbox" (click)="changeTaskToDone()">
-        <p>{{task.title}}</p>
+      <section
+        class="d-flex flex-wrap align-items-center justify-content-between"
+      >
+        <input type="checkbox" (click)="changeTaskToDone()" />
+        <span class="task-title">{{ task.title }}</span>
+        <div>
+          <span>Created Date:</span>
+          <span>{{ task.createdDate }}</span>
+        </div>
+        <div>
+          <span>Due Date:</span>
+          <span>{{ task.dueDate }}</span>
+        </div>
+        <div>
+          <span>Priority:</span>
+          <span>{{ task.priority }}</span>
+        </div>
       </section>
-
-      
     </div>
   </div>
 
   <ng-template #noTasks>
-    <h2>There are not current tasks.</h2>
-    <a routerLink="create-task">Add a new one</a>
+    <section class="d-flex flex-wrap align-items-center flex-column">
+      <h2>There are not current tasks.</h2>
+      <a routerLink="create-task">Add a new one</a>
+    </section>
   </ng-template>
-
 </div>
 
-
-<ng-template #loading>
-  Tasks are loading...
-</ng-template>
+<ng-template #loading> Tasks are loading... </ng-template>
