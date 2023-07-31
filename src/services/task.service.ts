@@ -1,13 +1,15 @@
 import {Injectable} from "@angular/core";
 import {BehaviorSubject} from "rxjs";
 import {priority} from "src/models/enums/priority.enum";
+import { TaskListType } from "src/models/enums/taskListType.enum";
 import {Task} from "src/models/task";
+import { TaskList } from "src/models/taskList";
 
 @Injectable({
     providedIn: 'root'
 })
 export class TaskService {
-    private tasks: Task[] = [new Task("Test", new Date(), priority.High, false, [])];
+    private tasks: TaskList[] = [new TaskList( "Test",[new Task("Test", new Date(), priority.High, false, [])], TaskListType.Normal)];
     private tasksBehaviorSubject: BehaviorSubject<Task[]> = new BehaviorSubject<Task[]>(this.tasks);
 
     addNewTask(newTask: Task) {
