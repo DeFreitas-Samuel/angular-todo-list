@@ -31,6 +31,35 @@ export class TaskService {
 
     private updateTasks(){
       this.tasksBehaviorSubject.next(this.tasks);
+      this.setTaskListInLocalStorage();
+    }
+
+    getTaskListFromLocalStorage(){
+      const localStorageString  = localStorage.getItem("Tasks");
+      if(localStorageString){
+        const localStorageObject = JSON.parse(localStorageString);
+        if(Array.isArray(localStorageObject)){
+          this.tasks = localStorageObject;
+          this.updateTasks();
+        }
+        else {
+          console.warn("The data in the local storage is not in the correct format");
+          localStorage.removeItem("Tasks");
+        }
+      }
+      else {
+        console.warn("There are no tasks to load from the local storage");
+      }
+    }
+
+
+    private setTaskListInLocalStorage(){
+      try{
+        localStorage.setItem("Tasks",JSON.stringify(this.tasks));
+      }
+      catch(error){
+        console.error(error);
+      }
     }
 
 

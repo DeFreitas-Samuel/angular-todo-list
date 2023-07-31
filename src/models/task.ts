@@ -18,7 +18,4 @@ export class Task {
         this.subtasks = subtasks;
     }
 
-    public getCreatedDate(){
-
-    }
 }
