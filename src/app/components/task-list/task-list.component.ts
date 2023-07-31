@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { TaskService } from 'src/services/task.service';
 import { Task } from 'src/models/task';
+import {priority} from "../../../models/enums/priority.enum";
 
 @Component({
   selector: 'app-task-list',
@@ -23,7 +24,9 @@ export class TaskListComponent implements OnInit {
     this.listOfTasks$ = this.taskService.tasks$;
   }
 
-  public changeTaskToDone(){
-    
+  public changeTaskToDone(taskId: string){
+
   }
+
+  protected readonly priority = priority;
 }

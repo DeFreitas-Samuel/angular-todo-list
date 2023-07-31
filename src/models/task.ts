@@ -1,6 +1,7 @@
 import {priority} from "./enums/priority.enum";
-
+import { ulid } from "ulidx";
 export class Task {
+    id:string = ulid();
     title:string = "";
     dueDate:Date = new Date();
     priority:priority;
@@ -18,6 +19,6 @@ export class Task {
     }
 
     public getCreatedDate(){
-        
+
     }
 }

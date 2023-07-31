@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { priority } from 'src/models/enums/priority.enum';
-import { TaskService } from 'src/services/task.service';
-import { Task } from 'src/models/task';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {priority} from 'src/models/enums/priority.enum';
+import {TaskService} from 'src/services/task.service';
+import {Task} from 'src/models/task';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class TaskCreationComponent {
   public priorities: string[] = Object.values(priority);
 
   public taskForm = this.fb.group({
-    name: ['', Validators.required],
+    title: ['', Validators.required],
     dueDate: [priority.Medium, Validators.required],
     priority: ['',  Validators.required],
   });
@@ -39,18 +39,17 @@ export class TaskCreationComponent {
 
   private convertFormValueToTask(formValue: any): Task {
 
-    const formName = formValue?.name;
+    const formTitle = formValue?.title;
     const formDueDate = new Date(formValue?.dueDate);
     const formPriority: priority = formValue?.priority;
-    const currentDate = new Date();
 
 
 
-    const newTask = new Task(); 
-    return newTask;
+
+    return new Task(formTitle, formDueDate, formPriority, false, []);
 
 
-    
+
   }
 
 

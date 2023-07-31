@@ -1,3 +1,23 @@
 .task-title {
-    font-size: 2em;
+  font-size: 2em;
+}
+
+.highest-priority {
+  background-color: #E29F9D;
+  color: #7A0000;
+}
+
+.high-priority {
+  background-color: #ECCDEF;
+  color: #750066;
+}
+
+.medium-priority {
+  background-color: #EDF0D0;
+  color: #596B00;
+}
+
+.low-priority {
+  background-color: #D0DDF0;
+  color: #00506B;
 }

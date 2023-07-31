@@ -1,7 +1,7 @@
 <h1>Create a new task</h1>
 <form class="d-flex flex-column" [formGroup]="taskForm" (ngSubmit)="onCreateTask()">
-    <label for="name">Name</label>
-    <input id="name" formControlName="name" autocomplete="off">
+    <label for="title">Title</label>
+    <input id="title" formControlName="title" autocomplete="off">
     <label for="due-date">Due Date</label>
     <input type="datetime-local" id="due-date" formControlName="dueDate" autocomplete="off">
     <label for="priority">Priority</label>
@@ -14,7 +14,7 @@
     <button type="submit" [disabled]="!taskForm.valid">Submit</button>
 </form>
 
-<!-- 
+<!--
 <ng-container *ngFor="let item of priority | keyvalue">
     {{item.key}}
 </ng-container> -->

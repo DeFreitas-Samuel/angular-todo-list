@@ -2,17 +2,26 @@
   <div *ngIf="listOfTask.length > 0; else noTasks">
     <div *ngFor="let task of listOfTask">
       <section
-        class="d-flex flex-wrap align-items-center justify-content-between"
+        class="my-2 rounded-3 px-4 d-flex flex-wrap align-items-center justify-content-between"
+        [ngClass]="
+        {
+        'highest-priority': task.priority === priority.Highest,
+        'high-priority': task.priority === priority.High,
+        'medium-priority': task.priority === priority.Medium,
+        'low-priority': task.priority === priority.Low
+        }
+        "
+
       >
-        <input type="checkbox" (click)="changeTaskToDone()" />
+        <input type="checkbox" (click)="changeTaskToDone(task.id)"/>
         <span class="task-title">{{ task.title }}</span>
         <div>
-          <span>Created Date:</span>
-          <span>{{ task.createdDate }}</span>
+          <span>Created Date: </span>
+          <span>{{ task.createdDate| date }} </span>
         </div>
         <div>
-          <span>Due Date:</span>
-          <span>{{ task.dueDate }}</span>
+          <span>Due Date: </span>
+          <span>{{ task.dueDate | date }}</span>
         </div>
         <div>
           <span>Priority:</span>
@@ -30,4 +39,4 @@
   </ng-template>
 </div>
 
-<ng-template #loading> Tasks are loading... </ng-template>
+<ng-template #loading> Tasks are loading...</ng-template>
