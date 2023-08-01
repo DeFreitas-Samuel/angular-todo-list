@@ -10,25 +10,47 @@ import { TaskList } from "src/models/taskList";
 })
 export class TaskService {
     private tasks: TaskList[] = [new TaskList( "Test",[new Task("Test", new Date(), priority.High, false, [])], TaskListType.Normal)];
-    private tasksBehaviorSubject: BehaviorSubject<Task[]> = new BehaviorSubject<Task[]>(this.tasks);
+    private tasksBehaviorSubject: BehaviorSubject<TaskList[]> = new BehaviorSubject<TaskList[]>(this.tasks);
 
-    addNewTask(newTask: Task) {
-        this.tasks.push(newTask);
-        this.updateTasks();
+    addNewTask(taskListId: string, newTask: Task) {
+        const taskListIndex = this.findATaskList(taskListId);
+        if(taskListIndex > 0 ){
+          this.tasks[taskListIndex].tasks.push(newTask);
+          this.updateTasks();
+        }
     }
 
     get tasks$() {
         return this.tasksBehaviorSubject.asObservable();
     }
 
-    flipATaskDoneStatus(taskId: string){
-        const idOfTaskToUpdate = this.tasks.findIndex((task) => {
-          return task.id === taskId;
-        })
-        if(idOfTaskToUpdate > 0){
-          this.tasks[idOfTaskToUpdate].isDone = !this.tasks[idOfTaskToUpdate].isDone;
-          this.updateTasks();
+    flipATaskDoneStatus(taskListId: string,taskId: string){
+        const taskListIndex = this.findATaskList(taskListId);
+        if(taskListIndex > 0 ){
+
+          const idOfTaskToUpdate = this.tasks[taskListIndex].tasks.findIndex((task) => {
+            return task.id === taskId;
+          })
+
+
+          if(idOfTaskToUpdate > 0){
+            this.tasks[taskListIndex].tasks[idOfTaskToUpdate].isDone = !this.tasks[taskListIndex].tasks[idOfTaskToUpdate].isDone;
+            this.updateTasks();
+          }
+          else{
+            console.warn("Task not found");
+          }
         }
+        else {
+          console.warn("Task List not found");
+        }
+
+    }
+
+    private findATaskList(taskListId: string){
+      return this.tasks.findIndex((taskLists) => {
+        return taskLists.id === taskListId;
+      })
     }
 
     private updateTasks(){

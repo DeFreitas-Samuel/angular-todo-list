@@ -5,6 +5,7 @@ import { ulid } from "ulidx";
 export class TaskList {
     id:string = ulid();
     name: string;
+    createdDate: Date = new Date();
     tasks: Task[];
     type: TaskListType;
 
@@ -14,4 +15,8 @@ export class TaskList {
         this.type = taskListType;
     }
 
+
+    get amountOfTasks(){
+        return this.tasks.length;
+    }
 }
