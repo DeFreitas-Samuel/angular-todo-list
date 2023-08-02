@@ -10,6 +10,9 @@ export class Task {
     createdDate: Date = new Date();
     isDone: boolean = false;
     description: string = "";
+    completedTime: Date|null = null;
+    completionTime: Date|null = null;
+    expectedTime: string|null= null;
     subtasks: Task[] = [];
 
     public constructor(title:string, dueDate:Date, priority:priority, isDone: boolean, subtasks: Task[]){

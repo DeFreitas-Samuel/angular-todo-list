@@ -18,10 +18,17 @@ export class TaskService {
           this.tasks[taskListIndex].tasks.push(newTask);
           this.updateTasks();
         }
+        else{
+          console.warn("Something went wrong");
+        }
     }
 
     get tasks$() {
         return this.tasksBehaviorSubject.asObservable();
+    }
+
+    get tasksSnapshot() {
+      return this.tasksBehaviorSubject.value;
     }
 
     flipATaskDoneStatus(taskListId: string,taskId: string){

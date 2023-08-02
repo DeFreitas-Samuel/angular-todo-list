@@ -1,39 +1,40 @@
-<div *ngIf="listOfTasks$ | async as listOfTask; else loading">
-  <div *ngIf="listOfTask.length > 0; else noTasks">
-    <div *ngFor="let task of listOfTask">
-      <section
-        class="my-2 rounded-3 px-4 d-flex flex-wrap align-items-center justify-content-between"
-        [ngClass]="
-        {
-        'highest-priority': task.priority === priority.Highest,
-        'high-priority': task.priority === priority.High,
-        'medium-priority': task.priority === priority.Medium,
-        'low-priority': task.priority === priority.Low
-        }
-        "
-
-      >
-        <input type="checkbox" (click)="changeTaskToDone(task.id)"/>
-        <span class="task-title">{{ task.title }}</span>
-        <div>
-          <span>Created Date: </span>
-          <span>{{ task.createdDate| date }} </span>
-        </div>
-        <div>
-          <span>Due Date: </span>
-          <span>{{ task.dueDate | date }}</span>
-        </div>
-        <div>
-          <span>Priority:</span>
-          <span>{{ task.priority }}</span>
-        </div>
-      </section>
+<div *ngIf="listOfTaskLists$ | async as listOfTaskLists; else loading">
+  <div *ngIf="listOfTaskLists.length > 0; else noTasks">
+    <div *ngFor="let taskList of listOfTaskLists">
+      <h3>{{ taskList.name }}</h3>
+      <div *ngFor="let task of taskList.tasks">
+        <!--TODO: Make a separate component for the task-->
+        <section
+          class="my-2 rounded-3 px-4 d-flex flex-wrap align-items-center justify-content-between"
+          [ngClass]="{
+            'highest-priority': task.priority === priority.Highest,
+            'high-priority': task.priority === priority.High,
+            'medium-priority': task.priority === priority.Medium,
+            'low-priority': task.priority === priority.Low
+          }"
+        >
+          <input type="checkbox" (click)="changeTaskToDone(task.id)" />
+          <span class="task-title">{{ task.title }}</span>
+          <div>
+            <span>Created Date: </span>
+            <span>{{ task.createdDate | date }} </span>
+          </div>
+          <div>
+            <span>Due Date: </span>
+            <span>{{ task.dueDate | date }}</span>
+          </div>
+          <div>
+            <span>Priority:</span>
+            <span>{{ task.priority }}</span>
+          </div>
+        </section>
+      </div>
     </div>
   </div>
 
   <ng-template #noTasks>
     <section class="d-flex flex-wrap align-items-center flex-column">
-      <h2>There are not current tasks.</h2>
+      <h2>There are not lists of tasks.</h2>
       <a routerLink="create-task">Add a new one</a>
     </section>
   </ng-template>

@@ -31,7 +31,7 @@ export class TaskCreationComponent {
     console.log(this.taskForm.value);
     const newTask = this.convertFormValueToTask(this.taskForm.value);
     console.log("This is the new task", newTask);
-    this.taskService.addNewTask(newTask);
+    this.taskService.addNewTask( this.taskService.tasksSnapshot[0].id, newTask);
     this.taskForm.reset();
     this.router.navigate(['/']);
 

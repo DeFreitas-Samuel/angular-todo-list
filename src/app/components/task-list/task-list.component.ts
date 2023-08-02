@@ -12,7 +12,7 @@ import { TaskList } from 'src/models/taskList';
 })
 export class TaskListComponent implements OnInit {
 
-  listOfTasks$!: Observable<TaskList[]>;
+  listOfTaskLists$!: Observable<TaskList[]>;
 
 
   constructor(private taskService: TaskService) { }
@@ -22,7 +22,7 @@ export class TaskListComponent implements OnInit {
   }
 
   private bootstrap(): void {
-    this.listOfTasks$ = this.taskService.tasks$;
+    this.listOfTaskLists$ = this.taskService.tasks$;
   }
 
   public changeTaskToDone(taskId: string){
