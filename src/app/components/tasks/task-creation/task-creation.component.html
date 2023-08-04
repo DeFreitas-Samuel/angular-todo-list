@@ -9,6 +9,11 @@
         <option value="">--Please choose an option--</option>
         <option *ngFor="let priority of priorities" value="{{priority}}">{{priority}}</option>
     </select>
+    <label for="task-list">Task List</label>
+    <select id="task-list" formControlName="taskList">
+      <option value="">--Please choose an List--</option>
+      <option *ngFor="let taskList of taskLists" value="{{taskList.id}}">{{taskList.name}}</option>
+    </select>
 
 
     <button type="submit" [disabled]="!taskForm.valid">Submit</button>
