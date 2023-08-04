@@ -14,7 +14,7 @@ export class TaskService {
 
     addNewTask(taskListId: string, newTask: Task) {
         const taskListIndex = this.findATaskList(taskListId);
-        if(taskListIndex > 0 ){
+        if(taskListIndex >= 0 ){
           this.tasks[taskListIndex].tasks.push(newTask);
           this.updateTasks();
         }
@@ -32,15 +32,16 @@ export class TaskService {
     }
 
     flipATaskDoneStatus(taskListId: string,taskId: string){
-        const taskListIndex = this.findATaskList(taskListId);
-        if(taskListIndex > 0 ){
+        const taskListIndex:number = this.findATaskList(taskListId);
+
+        if(taskListIndex >= 0 ){
 
           const idOfTaskToUpdate = this.tasks[taskListIndex].tasks.findIndex((task) => {
             return task.id === taskId;
           })
 
 
-          if(idOfTaskToUpdate > 0){
+          if(idOfTaskToUpdate >= 0){
             this.tasks[taskListIndex].tasks[idOfTaskToUpdate].isDone = !this.tasks[taskListIndex].tasks[idOfTaskToUpdate].isDone;
             this.updateTasks();
           }

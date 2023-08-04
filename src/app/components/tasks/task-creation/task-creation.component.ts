@@ -4,19 +4,12 @@ import {priority} from 'src/models/enums/priority.enum';
 import {TaskService} from 'src/services/task.service';
 import {Task} from 'src/models/task';
 import {Router} from '@angular/router';
-
-
+import {taskFormValue} from "../../../../models/taskFormValue.interface";
 @Component({
   selector: 'app-task-creation',
   templateUrl: './task-creation.component.html',
   styleUrls: ['./task-creation.component.scss']
 })
-interface taskFormValue {
-  title: string | null |undefined,
-  dueDate: string | null |undefined,
-  priority: priority | null |undefined,
-  taskList: string | null |undefined
-}
 
 export class TaskCreationComponent implements OnInit{
 
@@ -28,8 +21,8 @@ export class TaskCreationComponent implements OnInit{
 
   public taskForm = this.fb.group({
     title: ['', Validators.required],
-    dueDate: [priority.Medium, Validators.required],
-    priority: ['',  Validators.required],
+    dueDate: ['', Validators.required],
+    priority: [priority.Medium,  Validators.required],
     taskList: ['', Validators.required]
   });
 
@@ -48,12 +41,8 @@ export class TaskCreationComponent implements OnInit{
   }
 
   public onCreateTask() {
-    console.log(this.taskForm.value);
     const newTask = this.convertFormValueToTask(this.taskForm.value!);
-    console.log("This is the new task", newTask);
-    console.log("Before insertion", this.taskService.tasksSnapshot);
     this.taskService.addNewTask( this.taskForm.value.taskList!, newTask);
-    console.log("After insertion", this.taskService.tasksSnapshot);
     this.taskForm.reset();
     this.router.navigate(['/']);
 
