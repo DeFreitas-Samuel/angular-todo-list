@@ -13,17 +13,15 @@ import {taskFormValue} from "../../../../models/taskFormValue.interface";
 
 export class TaskCreationComponent implements OnInit{
 
-
-
   public taskLists: {id: string, name:string}[] = [];
 
   public priorities: string[] = Object.values(priority);
 
-  public taskForm = this.fb.group({
-    title: ['', Validators.required],
-    dueDate: ['', Validators.required],
-    priority: [priority.Medium,  Validators.required],
-    taskList: ['', Validators.required]
+  public taskForm = this.fb.nonNullable.group({
+    title: this.fb.control('', [Validators.required]),
+    dueDate: this.fb.control('', [Validators.required]),
+    priority: this.fb.control(priority.Medium,  [Validators.required]),
+    taskList: this.fb.control('', [Validators.required])
   });
 
   constructor(private fb: FormBuilder, private taskService: TaskService, private router: Router) { }
@@ -41,14 +39,14 @@ export class TaskCreationComponent implements OnInit{
   }
 
   public onCreateTask() {
-    const newTask = this.convertFormValueToTask(this.taskForm.value!);
+    const newTask = this.convertFormValueToTask(this.taskForm.getRawValue());
     this.taskService.addNewTask( this.taskForm.value.taskList!, newTask);
     this.taskForm.reset();
     this.router.navigate(['/']);
 
   }
 
-  private convertFormValueToTask(formValue: Partial<taskFormValue>): Task {
+  private convertFormValueToTask(formValue: taskFormValue): Task {
 
     if(formValue.title && formValue.dueDate && formValue.priority){
       const formTitle = formValue?.title;

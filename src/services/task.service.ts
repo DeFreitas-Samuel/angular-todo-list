@@ -13,14 +13,14 @@ export class TaskService {
     private tasksBehaviorSubject: BehaviorSubject<TaskList[]> = new BehaviorSubject<TaskList[]>(this.tasks);
 
     addNewTask(taskListId: string, newTask: Task) {
-        const taskListIndex = this.findATaskList(taskListId);
-        if(taskListIndex >= 0 ){
-          this.tasks[taskListIndex].tasks.push(newTask);
-          this.updateTasks();
-        }
-        else{
+        const taskListIndex = this.findATaskListIndex(taskListId);
+        if(taskListIndex < 0 ){
           console.warn("Something went wrong");
+          return; 
         }
+    
+        this.tasks[taskListIndex].tasks.push(newTask);
+        this.updateTasks();
     }
 
     get tasks$() {
@@ -32,32 +32,32 @@ export class TaskService {
     }
 
     flipATaskDoneStatus(taskListId: string,taskId: string){
-        const taskListIndex:number = this.findATaskList(taskListId);
+        const taskListIndex:number = this.findATaskListIndex(taskListId);
 
-        if(taskListIndex >= 0 ){
-
-          const idOfTaskToUpdate = this.tasks[taskListIndex].tasks.findIndex((task) => {
-            return task.id === taskId;
-          })
-
-
-          if(idOfTaskToUpdate >= 0){
-            this.tasks[taskListIndex].tasks[idOfTaskToUpdate].isDone = !this.tasks[taskListIndex].tasks[idOfTaskToUpdate].isDone;
-            this.updateTasks();
-          }
-          else{
-            console.warn("Task not found");
-          }
-        }
-        else {
+        if(taskListIndex < 0 ){
           console.warn("Task List not found");
         }
+        
+        const idOfTaskToUpdate = this.findATaskIndex(taskListIndex, taskId);
+
+        if(idOfTaskToUpdate < 0){
+          console.warn("Task not found");
+        }
+
+        this.tasks[taskListIndex].tasks[idOfTaskToUpdate].isDone = !this.tasks[taskListIndex].tasks[idOfTaskToUpdate].isDone;
+        this.updateTasks();
 
     }
 
-    private findATaskList(taskListId: string){
+    private findATaskListIndex(taskListId: string,){
       return this.tasks.findIndex((taskLists) => {
         return taskLists.id === taskListId;
+      })
+    }
+
+    private findATaskIndex(taskListIndex:number, taskId: string){
+      return this.tasks[taskListIndex].tasks.findIndex((task) => {
+        return task.id === taskId;
       })
     }
 
