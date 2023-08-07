@@ -1,8 +1,8 @@
-import {Injectable} from "@angular/core";
-import {BehaviorSubject} from "rxjs";
-import {priority} from "src/models/enums/priority.enum";
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, Observable } from "rxjs";
+import { priority } from "src/models/enums/priority.enum";
 import { TaskListType } from "src/models/enums/taskListType.enum";
-import {Task} from "src/models/task";
+import { Task } from "src/models/task";
 import { TaskList } from "src/models/taskList";
 
 @Injectable({
@@ -12,8 +12,8 @@ export class TaskService {
     private tasks: TaskList[] = [new TaskList( "Test",[new Task("Test", new Date(), priority.High, false, [])], TaskListType.Normal)];
     private tasksBehaviorSubject: BehaviorSubject<TaskList[]> = new BehaviorSubject<TaskList[]>(this.tasks);
 
-    addNewTask(taskListId: string, newTask: Task) {
-        const taskListIndex = this.findATaskListIndex(taskListId);
+    addNewTask(taskListId: string, newTask: Task):void {
+        const taskListIndex:number = this.findATaskListIndex(taskListId);
         if(taskListIndex < 0 ){
           console.warn("Something went wrong");
           return; 
@@ -23,15 +23,15 @@ export class TaskService {
         this.updateTasks();
     }
 
-    get tasks$() {
+    get tasks$():Observable<TaskList[]> {
         return this.tasksBehaviorSubject.asObservable();
     }
 
-    get tasksSnapshot() {
+    get tasksSnapshot():TaskList[] {
       return this.tasksBehaviorSubject.value;
     }
 
-    flipATaskDoneStatus(taskListId: string,taskId: string){
+    flipATaskDoneStatus(taskListId: string,taskId: string):void{
         const taskListIndex:number = this.findATaskListIndex(taskListId);
 
         if(taskListIndex < 0 ){
@@ -49,27 +49,25 @@ export class TaskService {
 
     }
 
-    private findATaskListIndex(taskListId: string,){
+    private findATaskListIndex(taskListId: string):number{
       return this.tasks.findIndex((taskLists) => {
         return taskLists.id === taskListId;
       })
     }
 
-    private findATaskIndex(taskListIndex:number, taskId: string){
+    private findATaskIndex(taskListIndex:number, taskId: string):number{
       return this.tasks[taskListIndex].tasks.findIndex((task) => {
         return task.id === taskId;
       })
     }
 
-    private updateTasks(){
-      console.log(this.tasks);
+    private updateTasks():void{
       this.tasksBehaviorSubject.next(this.tasks);
       this.setTaskListInLocalStorage();
-      console.log(this.tasks);
-
+      console.log(this.tasks)
     }
 
-    getTaskListFromLocalStorage(){
+    getTaskListFromLocalStorage():void{
       const localStorageString  = localStorage.getItem("Tasks");
       if(localStorageString){
         const localStorageObject = JSON.parse(localStorageString);
@@ -87,8 +85,7 @@ export class TaskService {
       }
     }
 
-
-    private setTaskListInLocalStorage(){
+    private setTaskListInLocalStorage():void{
       try{
         localStorage.setItem("Tasks",JSON.stringify(this.tasks));
       }
@@ -96,6 +93,4 @@ export class TaskService {
         console.error(error);
       }
     }
-
-
 }

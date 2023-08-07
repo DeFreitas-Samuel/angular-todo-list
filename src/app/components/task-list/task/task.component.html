@@ -1,1 +1,29 @@
-<p>task works!</p>
+<section
+  class="my-2 rounded-3 px-5 py-3 d-flex flex-wrap align-items-center justify-content-between"
+  [ngClass]="{
+    'highest-priority': !task.isDone && task.priority === priority.Highest,
+    'high-priority': !task.isDone && task.priority === priority.High,
+    'medium-priority': !task.isDone && task.priority === priority.Medium,
+    'low-priority': !task.isDone && task.priority === priority.Low,
+    completed: task.isDone
+  }"
+>
+  <input
+    type="checkbox"
+    [checked]="task.isDone ? true : false"
+    (click)="changeTaskToDone(taskListId, task.id)"
+  />
+  <span class="task-title">{{ task.title }}</span>
+  <div>
+    <span>Created Date: </span>
+    <span>{{ task.createdDate | date }} </span>
+  </div>
+  <div>
+    <span>Due Date: </span>
+    <span>{{ task.dueDate | date }}</span>
+  </div>
+  <div>
+    <span>Priority:</span>
+    <span>{{ task.priority }}</span>
+  </div>
+</section>

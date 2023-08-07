@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { priority } from 'src/models/enums/priority.enum';
+import { Task } from 'src/models/task';
+import { TaskService } from 'src/services/task.service';
 
 @Component({
   selector: 'app-task',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TaskComponent implements OnInit {
 
-  constructor() { }
+  @Input() taskListId!: string;
+  @Input() task!: Task;
 
+  constructor(private taskService: TaskService) { }
+  
   ngOnInit(): void {
   }
+  
+  public changeTaskToDone(taskListId:string, taskId: string){
+    this.taskService.flipATaskDoneStatus(taskListId, taskId);
+  }
+
+  protected readonly priority = priority;
 
 }

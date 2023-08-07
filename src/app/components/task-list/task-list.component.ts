@@ -29,5 +29,5 @@ export class TaskListComponent implements OnInit {
     this.taskService.flipATaskDoneStatus(taskListId, taskId);
   }
 
-  protected readonly priority = priority;
+
 }
