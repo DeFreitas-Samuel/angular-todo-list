@@ -13,7 +13,10 @@
             'low-priority': task.priority === priority.Low
           }"
         >
-          <input type="checkbox" (click)="changeTaskToDone(task.id)" />
+          <input
+            type="checkbox"
+            (click)="changeTaskToDone(taskList.id, task.id)"
+          />
           <span class="task-title">{{ task.title }}</span>
           <div>
             <span>Created Date: </span>

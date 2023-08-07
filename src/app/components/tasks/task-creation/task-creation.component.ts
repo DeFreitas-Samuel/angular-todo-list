@@ -4,7 +4,7 @@ import {priority} from 'src/models/enums/priority.enum';
 import {TaskService} from 'src/services/task.service';
 import {Task} from 'src/models/task';
 import {Router} from '@angular/router';
-import {taskFormValue} from "../../../../models/taskFormValue.interface";
+import {taskFormValue} from "../../../../models/taskFormValue.type";
 @Component({
   selector: 'app-task-creation',
   templateUrl: './task-creation.component.html',
@@ -30,7 +30,7 @@ export class TaskCreationComponent implements OnInit{
     this.bootstrap()
   }
 
-  private bootstrap() {
+  private bootstrap():void {
     this.getTaskLists();
   }
 
@@ -38,7 +38,7 @@ export class TaskCreationComponent implements OnInit{
     return priority;
   }
 
-  public onCreateTask() {
+  public onCreateTask():void {
     const newTask = this.convertFormValueToTask(this.taskForm.getRawValue());
     this.taskService.addNewTask( this.taskForm.value.taskList!, newTask);
     this.taskForm.reset();
@@ -60,7 +60,7 @@ export class TaskCreationComponent implements OnInit{
 
   }
 
-  private getTaskLists(){
+  private getTaskLists():void{
     this.taskService.tasksSnapshot.map((taskList)=>{
       const taskListSimplified = {
         id: taskList.id,

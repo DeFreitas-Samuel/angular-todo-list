@@ -25,8 +25,8 @@ export class TaskListComponent implements OnInit {
     this.listOfTaskLists$ = this.taskService.tasks$;
   }
 
-  public changeTaskToDone(taskId: string){
-
+  public changeTaskToDone(taskListId:string, taskId: string){
+    this.taskService.flipATaskDoneStatus(taskListId, taskId);
   }
 
   protected readonly priority = priority;

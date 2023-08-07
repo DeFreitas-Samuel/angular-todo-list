@@ -62,8 +62,11 @@ export class TaskService {
     }
 
     private updateTasks(){
+      console.log(this.tasks);
       this.tasksBehaviorSubject.next(this.tasks);
       this.setTaskListInLocalStorage();
+      console.log(this.tasks);
+
     }
 
     getTaskListFromLocalStorage(){
