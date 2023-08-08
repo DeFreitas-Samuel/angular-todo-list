@@ -9,6 +9,10 @@ import { TaskListComponent } from './components/task-list/task-list.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TaskComponent } from './components/task-list/task/task.component';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsModule } from '@ngxs/store';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,12 @@ import { TaskComponent } from './components/task-list/task/task.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxsModule.forRoot([],{
+      developmentMode: !environment.production
+    }), 
+    NgxsLoggerPluginModule.forRoot(), 
+    NgxsReduxDevtoolsPluginModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
