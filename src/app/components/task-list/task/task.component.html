@@ -26,4 +26,7 @@
     <span>Priority:</span>
     <span>{{ task.priority }}</span>
   </div>
+  <div>
+    <button (click)="onDeleteTask(taskListId, task.id)">Delete</button>
+  </div>
 </section>

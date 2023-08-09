@@ -13,6 +13,7 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { environment } from 'src/environments/environment';
+import { TaskDetailComponent } from './components/task-list/task-detail/task-detail.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { environment } from 'src/environments/environment';
     NotFoundComponent,
     HeaderComponent,
     TaskComponent,
+    TaskDetailComponent,
   ],
   imports: [
     BrowserModule,

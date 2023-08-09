@@ -22,6 +22,10 @@ export class TaskComponent implements OnInit {
     this.taskService.flipATaskDoneStatus(taskListId, taskId);
   }
 
+  onDeleteTask(taskListId:string, taskId: string){
+    this.taskService.deleteATask(taskListId, taskId);
+  }
+
   protected readonly priority = priority;
 
 }

@@ -12,7 +12,7 @@ export class TaskService {
     private tasks: TaskList[] = [new TaskList( "Test",[new Task("Test", new Date(), priority.High, false, [])], TaskListType.Normal)];
     private tasksBehaviorSubject: BehaviorSubject<TaskList[]> = new BehaviorSubject<TaskList[]>(this.tasks);
 
-    addNewTask(taskListId: string, newTask: Task):void {
+    public addNewTask(taskListId: string, newTask: Task):void {
         const taskListIndex:number = this.findATaskListIndex(taskListId);
         if(taskListIndex < 0 ){
           console.warn("Something went wrong");
@@ -20,7 +20,7 @@ export class TaskService {
         }
     
         this.tasks[taskListIndex].tasks.push(newTask);
-        this.updateTasks();
+        this.updateTasksBehaviorSubject();
     }
 
     get tasks$():Observable<TaskList[]> {
@@ -31,7 +31,7 @@ export class TaskService {
       return this.tasksBehaviorSubject.value;
     }
 
-    flipATaskDoneStatus(taskListId: string,taskId: string):void{
+    public flipATaskDoneStatus(taskListId: string,taskId: string):void{
         const taskListIndex:number = this.findATaskListIndex(taskListId);
 
         if(taskListIndex < 0 ){
@@ -45,7 +45,7 @@ export class TaskService {
         }
 
         this.tasks[taskListIndex].tasks[idOfTaskToUpdate].isDone = !this.tasks[taskListIndex].tasks[idOfTaskToUpdate].isDone;
-        this.updateTasks();
+        this.updateTasksBehaviorSubject();
 
     }
 
@@ -61,19 +61,28 @@ export class TaskService {
       })
     }
 
-    private updateTasks():void{
+    private updateTasksBehaviorSubject():void{
       this.tasksBehaviorSubject.next(this.tasks);
       this.setTaskListInLocalStorage();
       console.log(this.tasks)
     }
 
-    getTaskListFromLocalStorage():void{
+    public deleteATask(taskListId:string, taskId: string):void{
+      const taskListIndex = this.findATaskListIndex(taskListId);
+      const taskListWithTaskDeleted = this.tasks[taskListIndex].tasks.filter((tasks:Task)=>{
+        return tasks.id !== taskId
+      })
+      this.tasks[taskListIndex].tasks = taskListWithTaskDeleted;
+      this.updateTasksBehaviorSubject();
+    }
+
+    public getTaskListFromLocalStorage():void{
       const localStorageString  = localStorage.getItem("Tasks");
       if(localStorageString){
         const localStorageObject = JSON.parse(localStorageString);
         if(Array.isArray(localStorageObject)){
           this.tasks = localStorageObject;
-          this.updateTasks();
+          this.updateTasksBehaviorSubject();
         }
         else {
           console.warn("The data in the local storage is not in the correct format");
