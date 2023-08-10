@@ -14,6 +14,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { environment } from 'src/environments/environment';
 import { TaskDetailComponent } from './components/task-list/task-detail/task-detail.component';
+import { AppState } from './shared/states/tasks.state';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { TaskDetailComponent } from './components/task-list/task-detail/task-det
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    NgxsModule.forRoot([],{
+    NgxsModule.forRoot([AppState],{
       developmentMode: !environment.production
     }), 
     NgxsLoggerPluginModule.forRoot(), 
