@@ -1,0 +1,5 @@
+<app-specific-task-list *ngIf="taskList;else notTaskListFound" [taskList]="taskList"></app-specific-task-list>
+
+<ng-template #notTaskListFound>
+  <h2>This task list was not found</h2>
+</ng-template>

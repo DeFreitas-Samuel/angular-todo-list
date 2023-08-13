@@ -1,28 +1,15 @@
-<div *ngIf="listOfTaskLists$ | async as listOfTaskLists; else loading">
+<div *ngIf="listOfTaskLists">
   <div *ngIf="listOfTaskLists.length > 0; else noTasks">
-    <div *ngFor="let taskList of listOfTaskLists">
-      <h3>{{ taskList.name }}</h3>
-      <h4>Incomplete Tasks</h4>
-      <div *ngFor="let task of taskList.tasks">
-        <div *ngIf="!task.isDone">
-          <app-task [task]="task" [taskListId]="taskList.id"></app-task>
-        </div>
-      </div>
-      <h4>Completed Tasks</h4>
-      <div *ngFor="let task of taskList.tasks">
-        <div *ngIf="task.isDone">
-          <app-task [task]="task" [taskListId]="taskList.id"></app-task>
-        </div>
-      </div>
-    </div>
+    <app-specific-task-list *ngFor="let taskList of listOfTaskLists" [taskList]="taskList"></app-specific-task-list>
   </div>
+
 
   <ng-template #noTasks>
     <section class="d-flex flex-wrap align-items-center flex-column">
-      <h2>There are not lists of tasks.</h2>
+      <h2>There are currently no task list in the app.</h2>
       <a routerLink="create-task">Add a new one</a>
     </section>
   </ng-template>
 </div>
 
-<ng-template #loading> Tasks are loading...</ng-template>
+
