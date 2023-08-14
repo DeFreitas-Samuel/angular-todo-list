@@ -1,21 +1,3 @@
-export class GetAllTasks {
-  static readonly type = '[AllTasks] Fetch';
-}
-
-export class GetTaskList {
-  static readonly type = '[TaskLists] Fetch';
-
-  constructor(public taskListId: any) {
-  }
-}
-
-export class GetTask {
-  static readonly type = '[Task] Fetch';
-
-  constructor(public taskListId: any, public taskId: any) {
-  }
-}
-
 export class AddTaskList {
   static readonly type = '[TaskList] Add';
 
@@ -30,6 +12,10 @@ export class AddTask {
   }
 }
 
+export class FlipTaskDoneStatus {
+  static readonly type = '[Task] Add';
+}
+
 export class UpdateTask {
   static readonly type = '[Task] Update';
   // constructor(public payload: any, public id: number, public i:number) { }
@@ -40,7 +26,7 @@ export class UpdateTaskList {
   // constructor(public payload: any, public id: number, public i:number) { }
 }
 
-export class DeleteUsers {
+export class DeleteTask {
   static readonly type = '[Users] Delete';
   //constructor(public id: number) { }
 }

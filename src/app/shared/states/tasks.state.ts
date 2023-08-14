@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
 import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {tap} from 'rxjs/operators';
-import {GetAllTasks, GetTaskList, GetTask} from "../actions/tasks.action";
 import {TaskList} from "src/models/taskList";
 import {Task} from "../../../models/task";
 import {priority} from "../../../models/enums/priority.enum";
@@ -23,12 +22,26 @@ export class AppState {
   constructor() {
   }
 
+  private static findTaskListIndex(state: TaskStateModel, taskListId: string): number {
+    return state.tasks.findIndex((taskLists) => taskLists.id === taskListId);
+  }
 
   @Selector()
-  static getSpecificTaskList(state: TaskStateModel) {
-    return (taskListId: string) => {
-      const taskListIndex: number = state.tasks.findIndex((taskLists) => taskLists.id === taskListId);
+  static getSpecificTaskList(state: TaskStateModel): Function {
+    return (taskListId: string): TaskList => {
+      const taskListIndex: number = this.findTaskListIndex(state, taskListId);
       return state.tasks[taskListIndex];
+    }
+  }
+
+  @Selector()
+  static getSpecificTask(state: TaskStateModel): Function {
+    return (taskListId: string, taskId: string) => {
+      const taskListIndex: number = this.findTaskListIndex(state, taskListId);
+      const taskIndex: number = state.tasks[taskListIndex].tasks.findIndex((task:Task):boolean =>{
+        return task.id === taskId
+      })
+      return state.tasks[taskListIndex].tasks[taskIndex];
     }
   }
 
