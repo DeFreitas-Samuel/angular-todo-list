@@ -26,6 +26,18 @@ export class AppState {
     return state.tasks.findIndex((taskLists) => taskLists.id === taskListId);
   }
 
+  private static findTaskIndex(state: TaskStateModel, taskListId: string, taskId: string) {
+    const taskListIndex: number = this.findTaskListIndex(state, taskListId);
+    const taskIndex: number = state.tasks[taskListIndex].tasks.findIndex((task: Task): boolean => {
+      return task.id === taskId
+    })
+    return {
+      taskListIndex: taskListIndex,
+      taskIndex: taskIndex
+    }
+  }
+
+
   @Selector()
   static getSpecificTaskList(state: TaskStateModel): Function {
     return (taskListId: string): TaskList => {
@@ -37,11 +49,8 @@ export class AppState {
   @Selector()
   static getSpecificTask(state: TaskStateModel): Function {
     return (taskListId: string, taskId: string) => {
-      const taskListIndex: number = this.findTaskListIndex(state, taskListId);
-      const taskIndex: number = state.tasks[taskListIndex].tasks.findIndex((task:Task):boolean =>{
-        return task.id === taskId
-      })
-      return state.tasks[taskListIndex].tasks[taskIndex];
+      const taskIndexes = this.findTaskIndex(state, taskListId, taskId);
+      return state.tasks[taskIndexes.taskListIndex].tasks[taskIndexes.taskIndex];
     }
   }
 
