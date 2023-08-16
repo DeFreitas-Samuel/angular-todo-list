@@ -1,32 +1,51 @@
-export class AddTaskList {
-  static readonly type = '[TaskList] Add';
+import {TaskList} from "../../../models/taskList";
+import {Task} from "../../../models/task";
 
-  constructor(public taskList: any) {
+export class AddTaskList {
+  static readonly type = '[TaskList] AddTaskList';
+
+  constructor(public taskList: TaskList) {
   }
 }
 
 export class AddTask {
-  static readonly type = '[Task] Add';
+  static readonly type = '[Task] AddTask';
 
-  constructor(public taskListId: any, public task: any) {
+  constructor(public taskListId: string, public task: Task) {
   }
 }
 
 export class FlipTaskDoneStatus {
-  static readonly type = '[Task] Add';
+  static readonly type = '[Task] FlipTaskDoneStatus';
+
+  constructor(public taskListId: string, public taskId: string) {
+  }
 }
 
 export class UpdateTask {
-  static readonly type = '[Task] Update';
-  // constructor(public payload: any, public id: number, public i:number) { }
+  static readonly type = '[Task] UpdateTask';
+
+  constructor(public taskListId: string, public taskId: string) {
+  }
 }
 
 export class UpdateTaskList {
-  static readonly type = '[TaskList] Update';
-  // constructor(public payload: any, public id: number, public i:number) { }
+  static readonly type = '[TaskList] UpdateTaskList';
+
+  constructor(public taskListId: string) {
+  }
 }
 
 export class DeleteTask {
-  static readonly type = '[Users] Delete';
-  //constructor(public id: number) { }
+  static readonly type = '[Task] DeleteTask';
+
+  constructor(public taskListId: string, public taskId: string) {
+  }
+}
+
+export class DeleteTaskList {
+  static readonly type = '[TaskList] DeleteTaskList';
+
+  constructor(public taskListId: string) {
+  }
 }

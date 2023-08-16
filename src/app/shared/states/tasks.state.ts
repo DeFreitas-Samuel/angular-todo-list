@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
 import {Action, Selector, State, StateContext} from "@ngxs/store";
-import {tap} from 'rxjs/operators';
 import {TaskList} from "src/models/taskList";
 import {Task} from "../../../models/task";
 import {priority} from "../../../models/enums/priority.enum";
 import {TaskListType} from "../../../models/enums/taskListType.enum";
+import {AddTask, AddTaskList, DeleteTask, DeleteTaskList, FlipTaskDoneStatus} from "../actions/tasks.action";
 
 export type TaskStateModel = {
   tasks: TaskList[]
@@ -37,7 +37,6 @@ export class AppState {
     }
   }
 
-
   @Selector()
   static getSpecificTaskList(state: TaskStateModel): Function {
     return (taskListId: string): TaskList => {
@@ -54,15 +53,79 @@ export class AppState {
     }
   }
 
-  // @Action(AddUsers)
-  // addDataToState(ctx: StateContext<UserStateModel>, { payload }: AddUsers) {
-  //     return this._du.addUsers(payload).pipe(tap(returnData => {
-  //         const state=ctx.getState();
-  //         ctx.patchState({
-  //             users:[...state.users,returnData]
-  //         })
-  //     }))
-  // }
+  @Action(AddTaskList)
+  static addTaskList(ctx: StateContext<TaskStateModel>, action: AddTaskList): void {
+    const state: TaskStateModel = ctx.getState();
+    const newTasks: TaskList[] = state.tasks.slice();
+    newTasks.push(action.taskList);
+    ctx.patchState({
+      tasks: newTasks
+    })
+  }
+
+  @Action(AddTask)
+  static addTask(ctx: StateContext<TaskStateModel>, action: AddTask): void {
+    const state: TaskStateModel = ctx.getState();
+    const taskListIndex: number = this.findTaskListIndex(state, action.taskListId);
+    if (taskListIndex > -1) {
+      const newTasks: TaskList[] = state.tasks.slice();
+      newTasks[taskListIndex].tasks.push(action.task);
+      ctx.patchState({
+        tasks: newTasks
+      })
+    } else {
+      console.warn("The Task List that you tried to add a task to could not be found.")
+    }
+
+  }
+
+  @Action(FlipTaskDoneStatus)
+  static flipTaskDoneStatus(ctx: StateContext<TaskStateModel>, action: FlipTaskDoneStatus): void {
+    const state: TaskStateModel = ctx.getState();
+    const taskIndexInfo = this.findTaskIndex(state, action.taskListId, action.taskId);
+    if (taskIndexInfo.taskIndex > -1 && taskIndexInfo.taskListIndex > -1) {
+      const newTasks: TaskList[] = state.tasks.slice();
+      newTasks[taskIndexInfo.taskListIndex].tasks[taskIndexInfo.taskIndex].isDone = !newTasks[taskIndexInfo.taskListIndex].tasks[taskIndexInfo.taskIndex].isDone;
+      ctx.patchState({
+        tasks: newTasks
+      })
+    } else {
+      console.warn("That task cannot be found")
+    }
+  }
+
+  @Action(DeleteTaskList)
+  static deleteTaskList(ctx: StateContext<TaskStateModel>, action: DeleteTaskList): void {
+    const state: TaskStateModel = ctx.getState();
+    const taskListIndex: number = this.findTaskListIndex(state, action.taskListId);
+    if (taskListIndex > -1) {
+      const newTasks: TaskList[] = state.tasks.slice();
+      newTasks.splice(taskListIndex, 1)
+      ctx.patchState({
+        tasks: newTasks
+      })
+    } else {
+      console.warn("The Task List that you tried to delete could not be found.")
+    }
+
+  }
+
+  @Action(DeleteTask)
+  static deleteTask(ctx: StateContext<TaskStateModel>, action: DeleteTask): void {
+    const state: TaskStateModel = ctx.getState();
+    const taskIndexInfo = this.findTaskIndex(state, action.taskListId, action.taskId);
+    if (taskIndexInfo.taskIndex > -1 && taskIndexInfo.taskListIndex > -1) {
+      const newTasks: TaskList[] = state.tasks.slice();
+      newTasks[taskIndexInfo.taskListIndex].tasks.splice(taskIndexInfo.taskIndex,1)
+      ctx.patchState({
+        tasks: newTasks
+      })
+    } else {
+      console.warn("That task that you're trying to delete cannot be found")
+    }
+
+  }
+
 
   // @Action(UpdateUsers)
   // updateDataOfState(ctx: StateContext<UserStateModel>, { payload, id, i }: UpdateUsers) {
@@ -79,18 +142,5 @@ export class AppState {
   //     }))
   // }
 
-  // @Action(DeleteUsers)
-  // deleteDataFromState(ctx: StateContext<UserStateModel>, { id }: DeleteUsers) {
-  //     return this._du.deleteUser(id).pipe(tap(returnData => {
-  //         const state=ctx.getState();
-  //         console.log("The is is",id)
-  //         //Here we will create a new Array called filteredArray which won't contain the given id and set it equal to state.todo
-  //         const filteredArray=state.users.filter(contents=>contents.id!==id);
 
-  //         ctx.setState({
-  //             ...state,
-  //             users:filteredArray
-  //         })
-  //     }))
-  // }
 }
