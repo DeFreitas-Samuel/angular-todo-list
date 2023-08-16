@@ -4,7 +4,7 @@ import {TaskList} from "src/models/taskList";
 import {Task} from "../../../models/task";
 import {priority} from "../../../models/enums/priority.enum";
 import {TaskListType} from "../../../models/enums/taskListType.enum";
-import {AddTask, AddTaskList, DeleteTask, DeleteTaskList, FlipTaskDoneStatus} from "../actions/tasks.action";
+import {AddTask, AddTaskList, DeleteTask, DeleteTaskList, FlipTaskDoneStatus, UpdateTaskList, UpdateTask} from "../actions/tasks.action";
 
 export type TaskStateModel = {
   tasks: TaskList[]
@@ -54,7 +54,7 @@ export class AppState {
   }
 
   @Action(AddTaskList)
-  static addTaskList(ctx: StateContext<TaskStateModel>, action: AddTaskList): void {
+  addTaskList(ctx: StateContext<TaskStateModel>, action: AddTaskList): void {
     const state: TaskStateModel = ctx.getState();
     const newTasks: TaskList[] = state.tasks.slice();
     newTasks.push(action.taskList);
@@ -64,9 +64,9 @@ export class AppState {
   }
 
   @Action(AddTask)
-  static addTask(ctx: StateContext<TaskStateModel>, action: AddTask): void {
+  addTask(ctx: StateContext<TaskStateModel>, action: AddTask): void {
     const state: TaskStateModel = ctx.getState();
-    const taskListIndex: number = this.findTaskListIndex(state, action.taskListId);
+    const taskListIndex: number = AppState.findTaskListIndex(state, action.taskListId);
     if (taskListIndex > -1) {
       const newTasks: TaskList[] = state.tasks.slice();
       newTasks[taskListIndex].tasks.push(action.task);
@@ -80,9 +80,9 @@ export class AppState {
   }
 
   @Action(FlipTaskDoneStatus)
-  static flipTaskDoneStatus(ctx: StateContext<TaskStateModel>, action: FlipTaskDoneStatus): void {
+  flipTaskDoneStatus(ctx: StateContext<TaskStateModel>, action: FlipTaskDoneStatus): void {
     const state: TaskStateModel = ctx.getState();
-    const taskIndexInfo = this.findTaskIndex(state, action.taskListId, action.taskId);
+    const taskIndexInfo = AppState.findTaskIndex(state, action.taskListId, action.taskId);
     if (taskIndexInfo.taskIndex > -1 && taskIndexInfo.taskListIndex > -1) {
       const newTasks: TaskList[] = state.tasks.slice();
       newTasks[taskIndexInfo.taskListIndex].tasks[taskIndexInfo.taskIndex].isDone = !newTasks[taskIndexInfo.taskListIndex].tasks[taskIndexInfo.taskIndex].isDone;
@@ -95,9 +95,9 @@ export class AppState {
   }
 
   @Action(DeleteTaskList)
-  static deleteTaskList(ctx: StateContext<TaskStateModel>, action: DeleteTaskList): void {
+  deleteTaskList(ctx: StateContext<TaskStateModel>, action: DeleteTaskList): void {
     const state: TaskStateModel = ctx.getState();
-    const taskListIndex: number = this.findTaskListIndex(state, action.taskListId);
+    const taskListIndex: number = AppState.findTaskListIndex(state, action.taskListId);
     if (taskListIndex > -1) {
       const newTasks: TaskList[] = state.tasks.slice();
       newTasks.splice(taskListIndex, 1)
@@ -111,9 +111,9 @@ export class AppState {
   }
 
   @Action(DeleteTask)
-  static deleteTask(ctx: StateContext<TaskStateModel>, action: DeleteTask): void {
+  deleteTask(ctx: StateContext<TaskStateModel>, action: DeleteTask): void {
     const state: TaskStateModel = ctx.getState();
-    const taskIndexInfo = this.findTaskIndex(state, action.taskListId, action.taskId);
+    const taskIndexInfo = AppState.findTaskIndex(state, action.taskListId, action.taskId);
     if (taskIndexInfo.taskIndex > -1 && taskIndexInfo.taskListIndex > -1) {
       const newTasks: TaskList[] = state.tasks.slice();
       newTasks[taskIndexInfo.taskListIndex].tasks.splice(taskIndexInfo.taskIndex,1)
@@ -126,21 +126,33 @@ export class AppState {
 
   }
 
-
-  // @Action(UpdateUsers)
-  // updateDataOfState(ctx: StateContext<UserStateModel>, { payload, id, i }: UpdateUsers) {
-  //     return this._du.updateUser(payload, i).pipe(tap(returnData => {
-  //         const state=ctx.getState();
-
-  //         const userList = [...state.users];
-  //         userList[i]=payload;
-
-  //         ctx.setState({
-  //             ...state,
-  //             users: userList,
-  //         });
-  //     }))
-  // }
-
-
+  @Action(UpdateTaskList)
+  updateTaskList(ctx: StateContext<TaskStateModel>, action: UpdateTaskList): void {
+      const state: TaskStateModel = ctx.getState();
+      const taskListIndex: number = AppState.findTaskListIndex(state, action.taskListId);
+      if (taskListIndex > -1) {
+        const newTasks: TaskList[] = state.tasks.slice();
+        newTasks[taskListIndex] = action.taskList;
+        ctx.patchState({
+          tasks: newTasks
+        })
+      } else {
+        console.warn("That task list that you're trying to update cannot be found")
+      } 
+  } 
+  
+  @Action(UpdateTask)
+  updateTask(ctx: StateContext<TaskStateModel>, action: UpdateTask): void {
+    const state: TaskStateModel = ctx.getState();
+    const taskIndexInfo = AppState.findTaskIndex(state, action.taskListId, action.taskId);
+    if (taskIndexInfo.taskIndex > -1 && taskIndexInfo.taskListIndex > -1) {
+      const newTasks: TaskList[] = state.tasks.slice();
+      newTasks[taskIndexInfo.taskListIndex].tasks[taskIndexInfo.taskIndex] = action.task;
+      ctx.patchState({
+        tasks: newTasks
+      })
+    } else {
+      console.warn("That task cannot be found")
+    }
+  } 
 }

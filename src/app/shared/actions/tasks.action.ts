@@ -25,14 +25,14 @@ export class FlipTaskDoneStatus {
 export class UpdateTask {
   static readonly type = '[Task] UpdateTask';
 
-  constructor(public taskListId: string, public taskId: string) {
+  constructor(public taskListId: string, public taskId: string,  public task: Task) {
   }
 }
 
 export class UpdateTaskList {
   static readonly type = '[TaskList] UpdateTaskList';
 
-  constructor(public taskListId: string) {
+  constructor(public taskListId: string,  public taskList: TaskList) {
   }
 }
 
