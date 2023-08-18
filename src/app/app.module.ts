@@ -11,6 +11,7 @@ import {HeaderComponent} from './components/header/header.component';
 import {TaskComponent} from './components/task-list/task/task.component';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import {NgxsModule} from '@ngxs/store';
 import {environment} from 'src/environments/environment';
 import {TaskDetailComponent} from './components/task-list/task-detail/task-detail.component';
@@ -37,6 +38,7 @@ import {SingleTaskListComponent} from './components/single-task-list/single-task
     NgxsModule.forRoot([AppState], {
       developmentMode: !environment.production
     }),
+    NgxsStoragePluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
   ],

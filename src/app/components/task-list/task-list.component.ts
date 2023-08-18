@@ -1,10 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable, Subject, takeUntil} from 'rxjs';
-import {TaskService} from 'src/services/task.service';
-import {Task} from 'src/models/task';
-import {priority} from "../../../models/enums/priority.enum";
+import {Observable} from 'rxjs';
 import {TaskList} from 'src/models/taskList';
-import {Select, Store} from "@ngxs/store";
+import {Select} from "@ngxs/store";
 import {AppState, TaskStateModel} from "../../shared/states/tasks.state";
 
 @Component({
@@ -18,7 +15,7 @@ export class TaskListComponent implements OnInit {
   listOfTaskLists: TaskList[] | undefined;
 
 
-  constructor(private store: Store) {
+  constructor() {
   }
 
   public ngOnInit(): void {
@@ -32,11 +29,5 @@ export class TaskListComponent implements OnInit {
 
 
   }
-
-  /*
-    public changeTaskToDone(taskListId:string, taskId: string){
-      this.taskService.flipATaskDoneStatus(taskListId, taskId);
-    }
-  */
 
 }

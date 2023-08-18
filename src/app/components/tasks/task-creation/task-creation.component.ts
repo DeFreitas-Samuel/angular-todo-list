@@ -1,10 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {priority} from 'src/models/enums/priority.enum';
-import {TaskService} from 'src/services/task.service';
 import {Task} from 'src/models/task';
 import {Router} from '@angular/router';
 import {taskFormValue} from "../../../../models/taskFormValue.type";
+import { AddTask } from 'src/app/shared/actions/tasks.action';
+import { Store } from '@ngxs/store';
+import { TaskList } from 'src/models/taskList';
+import { TaskStateModel } from 'src/app/shared/states/tasks.state';
 @Component({
   selector: 'app-task-creation',
   templateUrl: './task-creation.component.html',
@@ -24,7 +27,7 @@ export class TaskCreationComponent implements OnInit{
     taskList: this.fb.control('', [Validators.required])
   });
 
-  constructor(private fb: FormBuilder, private taskService: TaskService, private router: Router) { }
+  constructor(private fb: FormBuilder, private router: Router, private store: Store) { }
 
   ngOnInit(): void {
     this.bootstrap()
@@ -40,7 +43,7 @@ export class TaskCreationComponent implements OnInit{
 
   public onCreateTask():void {
     const newTask = this.convertFormValueToTask(this.taskForm.getRawValue());
-    this.taskService.addNewTask( this.taskForm.value.taskList!, newTask);
+    this.store.dispatch(new AddTask( this.taskForm.value.taskList!, newTask ) );
     this.taskForm.reset();
     this.router.navigate(['/']);
 
@@ -59,9 +62,12 @@ export class TaskCreationComponent implements OnInit{
     }
 
   }
-
   private getTaskLists():void{
-    this.taskService.tasksSnapshot.map((taskList)=>{
+
+    const currentTasks = this.store.selectSnapshot<TaskList[]>( (state:TaskStateModel) => {
+      return state.tasks
+    })
+    currentTasks.map((taskList)=>{
       const taskListSimplified = {
         id: taskList.id,
         name: taskList.name

@@ -22,6 +22,10 @@ export class AppState {
   constructor() {
   }
 
+  private static arrayDeepCopy<T extends Array<any>>(array: T): T{
+    return JSON.parse(JSON.stringify(array));
+  }
+
   private static findTaskListIndex(state: TaskStateModel, taskListId: string): number {
     return state.tasks.findIndex((taskLists) => taskLists.id === taskListId);
   }
@@ -56,7 +60,7 @@ export class AppState {
   @Action(AddTaskList)
   addTaskList(ctx: StateContext<TaskStateModel>, action: AddTaskList): void {
     const state: TaskStateModel = ctx.getState();
-    const newTasks: TaskList[] = state.tasks.slice();
+    const newTasks: TaskList[] = AppState.arrayDeepCopy(state.tasks);
     newTasks.push(action.taskList);
     ctx.patchState({
       tasks: newTasks
@@ -68,7 +72,7 @@ export class AppState {
     const state: TaskStateModel = ctx.getState();
     const taskListIndex: number = AppState.findTaskListIndex(state, action.taskListId);
     if (taskListIndex > -1) {
-      const newTasks: TaskList[] = state.tasks.slice();
+      const newTasks: TaskList[] = AppState.arrayDeepCopy(state.tasks);
       newTasks[taskListIndex].tasks.push(action.task);
       ctx.patchState({
         tasks: newTasks
@@ -84,7 +88,8 @@ export class AppState {
     const state: TaskStateModel = ctx.getState();
     const taskIndexInfo = AppState.findTaskIndex(state, action.taskListId, action.taskId);
     if (taskIndexInfo.taskIndex > -1 && taskIndexInfo.taskListIndex > -1) {
-      const newTasks: TaskList[] = state.tasks.slice();
+      const newTasks: TaskList[] = AppState.arrayDeepCopy(state.tasks);
+
       newTasks[taskIndexInfo.taskListIndex].tasks[taskIndexInfo.taskIndex].isDone = !newTasks[taskIndexInfo.taskListIndex].tasks[taskIndexInfo.taskIndex].isDone;
       ctx.patchState({
         tasks: newTasks
@@ -99,7 +104,7 @@ export class AppState {
     const state: TaskStateModel = ctx.getState();
     const taskListIndex: number = AppState.findTaskListIndex(state, action.taskListId);
     if (taskListIndex > -1) {
-      const newTasks: TaskList[] = state.tasks.slice();
+      const newTasks: TaskList[] = AppState.arrayDeepCopy(state.tasks);
       newTasks.splice(taskListIndex, 1)
       ctx.patchState({
         tasks: newTasks
@@ -115,7 +120,7 @@ export class AppState {
     const state: TaskStateModel = ctx.getState();
     const taskIndexInfo = AppState.findTaskIndex(state, action.taskListId, action.taskId);
     if (taskIndexInfo.taskIndex > -1 && taskIndexInfo.taskListIndex > -1) {
-      const newTasks: TaskList[] = state.tasks.slice();
+      const newTasks: TaskList[] = AppState.arrayDeepCopy(state.tasks);
       newTasks[taskIndexInfo.taskListIndex].tasks.splice(taskIndexInfo.taskIndex,1)
       ctx.patchState({
         tasks: newTasks
@@ -131,7 +136,7 @@ export class AppState {
       const state: TaskStateModel = ctx.getState();
       const taskListIndex: number = AppState.findTaskListIndex(state, action.taskListId);
       if (taskListIndex > -1) {
-        const newTasks: TaskList[] = state.tasks.slice();
+        const newTasks: TaskList[] = AppState.arrayDeepCopy(state.tasks);
         newTasks[taskListIndex] = action.taskList;
         ctx.patchState({
           tasks: newTasks
@@ -146,7 +151,7 @@ export class AppState {
     const state: TaskStateModel = ctx.getState();
     const taskIndexInfo = AppState.findTaskIndex(state, action.taskListId, action.taskId);
     if (taskIndexInfo.taskIndex > -1 && taskIndexInfo.taskListIndex > -1) {
-      const newTasks: TaskList[] = state.tasks.slice();
+      const newTasks: TaskList[] = AppState.arrayDeepCopy(state.tasks);
       newTasks[taskIndexInfo.taskListIndex].tasks[taskIndexInfo.taskIndex] = action.task;
       ctx.patchState({
         tasks: newTasks

@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { DeleteTask, FlipTaskDoneStatus } from 'src/app/shared/actions/tasks.action';
 import { priority } from 'src/models/enums/priority.enum';
 import { Task } from 'src/models/task';
-import { TaskService } from 'src/services/task.service';
 
 @Component({
   selector: 'app-task',
@@ -13,17 +14,17 @@ export class TaskComponent implements OnInit {
   @Input() taskListId!: string;
   @Input() task!: Task;
 
-  constructor(private taskService: TaskService) { }
+  constructor( private store: Store ) { }
   
   ngOnInit(): void {
   }
   
   public changeTaskToDone(taskListId:string, taskId: string){
-    this.taskService.flipATaskDoneStatus(taskListId, taskId);
+    this.store.dispatch(new FlipTaskDoneStatus(taskListId, taskId));
   }
 
   onDeleteTask(taskListId:string, taskId: string){
-    this.taskService.deleteATask(taskListId, taskId);
+    this.store.dispatch(new DeleteTask(taskListId, taskId));
   }
 
   protected readonly priority = priority;
