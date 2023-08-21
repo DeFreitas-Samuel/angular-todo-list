@@ -1,15 +1,15 @@
 <div *ngIf="listOfTaskLists">
   <div *ngIf="listOfTaskLists.length > 0; else noTasks">
-    <app-specific-task-list *ngFor="let taskList of listOfTaskLists" [taskList]="taskList"></app-specific-task-list>
+    <app-specific-task-list
+      *ngFor="let taskList of listOfTaskLists"
+      [taskList]="taskList"
+    ></app-specific-task-list>
   </div>
-
 
   <ng-template #noTasks>
     <section class="d-flex flex-wrap align-items-center flex-column">
-      <h2>There are currently no task list in the app.</h2>
+      <h2 class="title">There are currently no task list in the app.</h2>
       <a routerLink="create-task">Add a new one</a>
     </section>
   </ng-template>
 </div>
-
-

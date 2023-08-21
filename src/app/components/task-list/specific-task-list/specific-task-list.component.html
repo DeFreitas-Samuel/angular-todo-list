@@ -1,12 +1,12 @@
 <section>
-  <h3>{{ taskList.name }}</h3>
-  <h4>Incomplete Tasks</h4>
+  <h3 class="title">{{ taskList.name }}</h3>
+  <h4 class="title">Incomplete Tasks</h4>
   <div *ngFor="let task of taskList.tasks">
     <div *ngIf="!task.isDone">
       <app-task [task]="task" [taskListId]="taskList.id"></app-task>
     </div>
   </div>
-  <h4>Completed Tasks</h4>
+  <h4 class="title">Completed Tasks</h4>
   <div *ngFor="let task of taskList.tasks">
     <div *ngIf="task.isDone">
       <app-task [task]="task" [taskListId]="taskList.id"></app-task>

@@ -1,10 +1,6 @@
 <section
-  class="my-2 rounded-3 px-5 py-3 d-flex flex-wrap align-items-center justify-content-between"
+  class="my-2 rounded-3 px-5 py-3 d-flex flex-wrap align-items-center justify-content-between task-item-section"
   [ngClass]="{
-    'highest-priority': !task.isDone && task.priority === priority.Highest,
-    'high-priority': !task.isDone && task.priority === priority.High,
-    'medium-priority': !task.isDone && task.priority === priority.Medium,
-    'low-priority': !task.isDone && task.priority === priority.Low,
     completed: task.isDone
   }"
 >
