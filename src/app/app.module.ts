@@ -7,17 +7,17 @@ import {AppComponent} from './app.component';
 import {TaskCreationComponent} from './components/tasks/task-creation/task-creation.component';
 import {TaskListComponent} from './components/task-list/task-list.component';
 import {NotFoundComponent} from './components/not-found/not-found.component';
-import {HeaderComponent} from './components/header/header.component';
 import {TaskComponent} from './components/task-list/task/task.component';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
-import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import {NgxsStoragePluginModule} from '@ngxs/storage-plugin';
 import {NgxsModule} from '@ngxs/store';
 import {environment} from 'src/environments/environment';
 import {TaskDetailComponent} from './components/task-list/task-detail/task-detail.component';
 import {AppState} from './shared/states/tasks.state';
 import {SpecificTaskListComponent} from './components/task-list/specific-task-list/specific-task-list.component';
 import {SingleTaskListComponent} from './components/single-task-list/single-task-list.component';
+import {SidebarComponent} from "./components/sidebar/sidebar.component";
 
 @NgModule({
   declarations: [
@@ -25,11 +25,11 @@ import {SingleTaskListComponent} from './components/single-task-list/single-task
     TaskCreationComponent,
     TaskListComponent,
     NotFoundComponent,
-    HeaderComponent,
     TaskComponent,
     TaskDetailComponent,
     SpecificTaskListComponent,
     SingleTaskListComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

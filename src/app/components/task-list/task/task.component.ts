@@ -15,10 +15,10 @@ export class TaskComponent implements OnInit {
   @Input() task!: Task;
 
   constructor( private store: Store ) { }
-  
+
   ngOnInit(): void {
   }
-  
+
   public changeTaskToDone(taskListId:string, taskId: string){
     this.store.dispatch(new FlipTaskDoneStatus(taskListId, taskId));
   }
@@ -28,5 +28,6 @@ export class TaskComponent implements OnInit {
   }
 
   protected readonly priority = priority;
+
 
 }

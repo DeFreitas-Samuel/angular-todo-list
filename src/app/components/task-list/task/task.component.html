@@ -1,28 +1,41 @@
 <section
-  class="my-2 rounded-3 px-5 py-3 d-flex flex-wrap align-items-center justify-content-between task-item-section"
+  class="my-2 rounded-3 px-3 py-4 d-flex flex-wrap align-items-center justify-content-between task-item-section"
   [ngClass]="{
+    'highest-priority': task.priority === priority.Highest,
     completed: task.isDone
   }"
 >
-  <input
-    type="checkbox"
-    [checked]="task.isDone ? true : false"
-    (click)="changeTaskToDone(taskListId, task.id)"
-  />
-  <span class="task-title">{{ task.title }}</span>
-  <div>
-    <span>Created Date: </span>
-    <span>{{ task.createdDate | date }} </span>
+  <div class="task-title">
+    <input
+      type="checkbox"
+      class="checkbox-square"
+      [checked]="task.isDone"
+      (click)="changeTaskToDone(taskListId, task.id)"
+    />
+    <div class="task-text" [ngClass]="{
+    'task-text-completed': task.isDone
+    }"
+    >{{ task.title }}</div>
   </div>
   <div>
-    <span>Due Date: </span>
-    <span>{{ task.dueDate | date }}</span>
+    <span class="task-text" [ngClass]="{
+    'task-text-completed': task.isDone
+    }"
+    >Priority:</span>
+    <span class="task-text" [ngClass]="{
+    'task-text-completed': task.isDone
+    }"
+    >{{ task.priority }}</span>
   </div>
   <div>
-    <span>Priority:</span>
-    <span>{{ task.priority }}</span>
-  </div>
-  <div>
-    <button (click)="onDeleteTask(taskListId, task.id)">Delete</button>
+    <span class="task-text" [ngClass]="{
+    'task-text-completed': task.isDone
+    }"
+
+    >Due Date: </span>
+    <span class="task-text" [ngClass]="{
+    'task-text-completed': task.isDone
+    }"
+    >{{ task.dueDate | date }}</span>
   </div>
 </section>
