@@ -7,7 +7,7 @@ import {taskFormValue} from "../../../../models/taskFormValue.type";
 import { AddTask } from 'src/app/shared/actions/tasks.action';
 import { Store } from '@ngxs/store';
 import { TaskList } from 'src/models/taskList';
-import { TaskStateModel } from 'src/app/shared/states/tasks.state';
+
 @Component({
   selector: 'app-task-creation',
   templateUrl: './task-creation.component.html',
@@ -64,10 +64,14 @@ export class TaskCreationComponent implements OnInit{
   }
   private getTaskLists():void{
 
-    const currentTasks = this.store.selectSnapshot<TaskList[]>( (state:TaskStateModel) => {
-      return state.tasks
+    const currentTasks = this.store.selectSnapshot<TaskList[]>( state => {
+      return state.appState.tasks
     })
-    currentTasks.map((taskList)=>{
+
+    const entireState = this.store.selectSnapshot(state => state);
+    console.log("Entire state", entireState);
+    console.log("Current Tasks" ,currentTasks);
+    currentTasks.map((taskList) => {
       const taskListSimplified = {
         id: taskList.id,
         name: taskList.name
