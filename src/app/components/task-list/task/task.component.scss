@@ -15,8 +15,7 @@
 .task-title {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100px;
+  width: 400px;
 }
 
 .task-text {
@@ -31,4 +30,8 @@
 
 .completed {
   background-color: rgba(148, 255, 171, 0.25);
+}
+
+.title-text {
+  margin-left: 2rem;
 }

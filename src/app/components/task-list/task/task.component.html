@@ -12,30 +12,45 @@
       [checked]="task.isDone"
       (click)="changeTaskToDone(taskListId, task.id)"
     />
-    <div class="task-text" [ngClass]="{
-    'task-text-completed': task.isDone
-    }"
-    >{{ task.title }}</div>
+    <div
+      class="task-text title-text"
+      [ngClass]="{
+        'task-text-completed': task.isDone
+      }"
+    >
+      {{ task.title }}
+    </div>
   </div>
   <div>
-    <span class="task-text" [ngClass]="{
-    'task-text-completed': task.isDone
-    }"
-    >Priority:</span>
-    <span class="task-text" [ngClass]="{
-    'task-text-completed': task.isDone
-    }"
-    >{{ task.priority }}</span>
+    <span
+      class="task-text"
+      [ngClass]="{
+        'task-text-completed': task.isDone
+      }"
+      >Priority:</span
+    >
+    <span
+      class="task-text"
+      [ngClass]="{
+        'task-text-completed': task.isDone
+      }"
+      >{{ task.priority }}</span
+    >
   </div>
   <div>
-    <span class="task-text" [ngClass]="{
-    'task-text-completed': task.isDone
-    }"
-
-    >Due Date: </span>
-    <span class="task-text" [ngClass]="{
-    'task-text-completed': task.isDone
-    }"
-    >{{ task.dueDate | date }}</span>
+    <span
+      class="task-text"
+      [ngClass]="{
+        'task-text-completed': task.isDone
+      }"
+      >Due Date:
+    </span>
+    <span
+      class="task-text"
+      [ngClass]="{
+        'task-text-completed': task.isDone
+      }"
+      >{{ task.dueDate | date }}</span
+    >
   </div>
 </section>
