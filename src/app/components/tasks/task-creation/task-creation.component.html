@@ -23,8 +23,8 @@
   <label for="task-list">Task List</label>
   <select id="task-list" formControlName="taskList">
     <option value="">--Please choose an List--</option>
-    <option *ngFor="let taskList of taskLists" value="{{ taskList.id }}">
-      {{ taskList.name }}
+    <option *ngFor="let taskList of taskLists" value="{{ taskList.taskListId }}">
+      {{ taskList.taskListName }}
     </option>
   </select>
 

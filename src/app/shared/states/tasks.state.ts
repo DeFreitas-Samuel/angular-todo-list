@@ -42,6 +42,11 @@ export class AppState {
   }
 
   @Selector()
+  static AllTaskLists(state: TaskStateModel):TaskList[] {
+    return state.tasks;
+  }
+
+  @Selector()
   static getSpecificTaskList(state: TaskStateModel): Function {
     return (taskListId: string): TaskList => {
       const taskListIndex: number = this.findTaskListIndex(state, taskListId);
@@ -143,9 +148,9 @@ export class AppState {
         })
       } else {
         console.warn("That task list that you're trying to update cannot be found")
-      } 
-  } 
-  
+      }
+  }
+
   @Action(UpdateTask)
   updateTask(ctx: StateContext<TaskStateModel>, action: UpdateTask): void {
     const state: TaskStateModel = ctx.getState();
@@ -159,5 +164,5 @@ export class AppState {
     } else {
       console.warn("That task cannot be found")
     }
-  } 
+  }
 }

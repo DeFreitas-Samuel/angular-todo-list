@@ -4,5 +4,11 @@
     <button class="add-button">Add</button>
   </div>
 
+  <section class="task-list-section">
+    <div *ngFor="let taskList of taskLists">
+      <a routerLink="task-list/{{taskList.taskListId}}">{{taskList.taskListName}}</a>
+    </div>
+  </section>
+
 </section>
 

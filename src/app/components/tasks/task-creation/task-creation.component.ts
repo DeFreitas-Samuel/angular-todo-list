@@ -4,9 +4,10 @@ import {priority} from 'src/models/enums/priority.enum';
 import {Task} from 'src/models/task';
 import {Router} from '@angular/router';
 import {taskFormValue} from "../../../../models/taskFormValue.type";
-import { AddTask } from 'src/app/shared/actions/tasks.action';
-import { Store } from '@ngxs/store';
-import { TaskList } from 'src/models/taskList';
+import {AddTask} from 'src/app/shared/actions/tasks.action';
+import {Store} from '@ngxs/store';
+import {TaskList} from 'src/models/taskList';
+import {SimplifiedTaskList} from "../../../../models/SimplifiedTaskList.type";
 
 @Component({
   selector: 'app-task-creation',
@@ -14,36 +15,37 @@ import { TaskList } from 'src/models/taskList';
   styleUrls: ['./task-creation.component.scss']
 })
 
-export class TaskCreationComponent implements OnInit{
+export class TaskCreationComponent implements OnInit {
 
-  public taskLists: {id: string, name:string}[] = [];
+  public taskLists:SimplifiedTaskList[] = [];
 
   public priorities: string[] = Object.values(priority);
 
   public taskForm = this.fb.nonNullable.group({
     title: this.fb.control('', [Validators.required]),
     dueDate: this.fb.control('', [Validators.required]),
-    priority: this.fb.control(priority.Medium,  [Validators.required]),
+    priority: this.fb.control(priority.Medium, [Validators.required]),
     taskList: this.fb.control('', [Validators.required])
   });
 
-  constructor(private fb: FormBuilder, private router: Router, private store: Store) { }
+  constructor(private fb: FormBuilder, private router: Router, private store: Store) {
+  }
 
   ngOnInit(): void {
     this.bootstrap()
   }
 
-  private bootstrap():void {
-    this.getTaskLists();
+  private bootstrap(): void {
+    this.taskLists = this.getTaskLists();
   }
 
   public get priority(): typeof priority {
     return priority;
   }
 
-  public onCreateTask():void {
+  public onCreateTask(): void {
     const newTask = this.convertFormValueToTask(this.taskForm.getRawValue());
-    this.store.dispatch(new AddTask( this.taskForm.value.taskList!, newTask ) );
+    this.store.dispatch(new AddTask(this.taskForm.value.taskList!, newTask));
     this.taskForm.reset();
     this.router.navigate(['/']);
 
@@ -51,35 +53,29 @@ export class TaskCreationComponent implements OnInit{
 
   private convertFormValueToTask(formValue: taskFormValue): Task {
 
-    if(formValue.title && formValue.dueDate && formValue.priority){
-      const formTitle = formValue?.title;
-      const formDueDate:Date = new Date(formValue?.dueDate);
+    if (formValue.title && formValue.dueDate && formValue.priority) {
+      const formTitle: string = formValue?.title;
+      const formDueDate: Date = new Date(formValue?.dueDate);
       const formPriority: priority = formValue?.priority;
       return new Task(formTitle, formDueDate, formPriority, false, []);
-    }
-    else {
+    } else {
       throw new Error("Invalid form value. Title, due date, and priority are required.");
     }
 
   }
-  private getTaskLists():void{
 
-    const currentTasks = this.store.selectSnapshot<TaskList[]>( state => {
+  private getTaskLists():SimplifiedTaskList[] {
+
+    const currentTasks: TaskList[] = this.store.selectSnapshot<TaskList[]>(state => {
       return state.appState.tasks
     })
-
-    const entireState = this.store.selectSnapshot(state => state);
-    console.log("Entire state", entireState);
-    console.log("Current Tasks" ,currentTasks);
-    currentTasks.map((taskList) => {
-      const taskListSimplified = {
-        id: taskList.id,
-        name: taskList.name
+    return currentTasks.map((taskList: TaskList) => {
+      return {
+        taskListId: taskList.id,
+        taskListName: taskList.name
       }
-      this.taskLists.push(taskListSimplified);
-    })
+    });
   }
-
 
 
 }
