@@ -20,6 +20,15 @@ a {
 }
 
 .task-list-section {
-  font-size: 1.5rem;
   padding-top: 1rem;
+
+}
+
+.task-list-item {
+  display: flex;
+  align-items: center;
+}
+
+.task-list-title {
+  font-size: 2rem;
 }
