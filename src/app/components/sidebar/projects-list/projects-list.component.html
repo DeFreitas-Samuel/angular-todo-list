@@ -1,0 +1,10 @@
+<div class="task-list-item">
+  <div class="project-title-group">
+    <i class="fa-solid fa-list"></i>
+    <a class="task-list-title" routerLink="task-list/{{ project.id }}">
+      {{ project.name }}
+    </a>
+  </div>
+
+  <div>{{ unfinishedTasksLength }}/{{ taskTotalLength }}</div>
+</div>

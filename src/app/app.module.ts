@@ -18,6 +18,7 @@ import {AppState} from './shared/states/tasks.state';
 import {SpecificTaskListComponent} from './components/task-list/specific-task-list/specific-task-list.component';
 import {SingleTaskListComponent} from './components/single-task-list/single-task-list.component';
 import {SidebarComponent} from "./components/sidebar/sidebar.component";
+import { ProjectsListComponent } from './components/sidebar/projects-list/projects-list.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {SidebarComponent} from "./components/sidebar/sidebar.component";
     TaskDetailComponent,
     SpecificTaskListComponent,
     SingleTaskListComponent,
-    SidebarComponent
+    SidebarComponent,
+    ProjectsListComponent
   ],
   imports: [
     BrowserModule,

@@ -5,11 +5,9 @@
   </div>
 
   <section class="task-list-section">
-    <div class="task-list-item" *ngFor="let taskList of taskLists">
-      <i class="fa-solid fa-list"></i>
-      <a class="task-list-title" routerLink="task-list/{{taskList.taskListId}}">{{taskList.taskListName}}</a>
-    </div>
+    <app-projects-list
+      [project]="project"
+      *ngFor="let project of projects"
+    ></app-projects-list>
   </section>
-
 </section>
-

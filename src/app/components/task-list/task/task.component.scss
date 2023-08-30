@@ -10,6 +10,7 @@
 .checkbox-square {
   width: 25px;
   height: 25px;
+  flex-shrink: 0;
 }
 
 .task-title {
@@ -21,6 +22,8 @@
 .task-text {
   font-size: 22px;
   font-weight: 300;
+  flex: 1;
+  word-wrap: break-word;
 }
 
 .task-text-completed {

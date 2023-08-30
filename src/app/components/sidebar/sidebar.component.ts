@@ -13,7 +13,7 @@ import {SimplifiedTaskList} from "../../../models/SimplifiedTaskList.type";
 export class SidebarComponent implements OnInit, OnDestroy {
 
   @Select(AppState.AllTaskLists) taskLists$!: Observable<TaskList[]>;
-  taskLists!: SimplifiedTaskList[];
+  projects!: TaskList[];
   private destroy$ = new Subject<void>;
 
   constructor() {
@@ -25,18 +25,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   private bootstrap() {
     this.taskLists$.pipe(
-      map((taskLists: TaskList[]) => {
-
-        return taskLists.map(taskList => {
-          return {
-            taskListName: taskList.name,
-            taskListId: taskList.id
-          }
-        })
-      }),
       takeUntil(this.destroy$)
-    ).subscribe(taskListSimplified => {
-      this.taskLists = taskListSimplified
+    ).subscribe(projects => {
+      this.projects = projects
     })
 
   }
