@@ -1,7 +1,12 @@
 <section class="sidebar">
   <div class="project-header">
     <a [routerLink]="['/']"><h1>Projects</h1></a>
-    <button class="add-button">Add</button>
+    <button class="add-button" (click)="onAddList()">Add</button>
+  </div>
+
+  <div class="project-creation-section" *ngIf="!addingList">
+    <input class="project-creation-name" type="text" />
+    <button class="add-button">Confirm</button>
   </div>
 
   <section class="task-list-section">

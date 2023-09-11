@@ -20,3 +20,12 @@ a {
 .task-list-section {
   padding-top: 1rem;
 }
+
+.project-creation-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.project-creation-name {
+  border-radius: 10px;
+}

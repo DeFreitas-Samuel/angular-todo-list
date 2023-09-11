@@ -1,6 +1,6 @@
-import {TaskListType} from "./enums/taskListType.enum";
-import {Task} from "./task";
-import {ulid} from "ulidx";
+import { TaskListType } from './enums/taskListType.enum';
+import { Task } from './task';
+import { ulid } from 'ulidx';
 
 export class TaskList {
   id: string;
@@ -9,15 +9,15 @@ export class TaskList {
   tasks: Task[];
   type: TaskListType;
 
-  constructor(name: string, tasks: Task[], taskListType: TaskListType, id?: string) {
+  constructor(
+    name: string,
+    tasks: Task[],
+    taskListType: TaskListType,
+    id?: string
+  ) {
     this.id = id ? id : ulid();
     this.name = name;
     this.tasks = tasks;
     this.type = taskListType;
-  }
-
-
-  get amountOfTasks() {
-    return this.tasks.length;
   }
 }
