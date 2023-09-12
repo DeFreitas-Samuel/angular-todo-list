@@ -4,9 +4,26 @@
     <button class="add-button" (click)="onAddList()">Add</button>
   </div>
 
-  <div class="project-creation-section" *ngIf="!addingList">
-    <input class="project-creation-name" type="text" />
-    <button class="add-button">Confirm</button>
+  <div *ngIf="!addingList">
+    <form
+      class="project-creation-form"
+      [formGroup]="createListForm"
+      (ngSubmit)="onCreateProject()"
+    >
+      <input
+        autocomplete="off"
+        formControlName="title"
+        class="project-creation-name"
+        type="text"
+      />
+      <button
+        type="submit"
+        class="add-button"
+        [disabled]="!createListForm.valid"
+      >
+        Confirm
+      </button>
+    </form>
   </div>
 
   <section class="task-list-section">

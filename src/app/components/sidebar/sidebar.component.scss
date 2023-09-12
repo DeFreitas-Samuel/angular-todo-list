@@ -4,6 +4,7 @@
   width: 20vw;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   padding: 2rem;
+  position: fixed;
 }
 
 .project-header {
@@ -21,7 +22,7 @@ a {
   padding-top: 1rem;
 }
 
-.project-creation-section {
+.project-creation-form {
   display: flex;
   justify-content: space-between;
 }

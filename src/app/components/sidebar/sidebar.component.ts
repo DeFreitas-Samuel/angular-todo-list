@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { AppState } from '../../shared/states/tasks.state';
-import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { TaskList } from '../../../models/taskList';
-import { SimplifiedTaskList } from '../../../models/SimplifiedTaskList.type';
+import { FormBuilder, Validators } from '@angular/forms';
+import { AddTaskList } from 'src/app/shared/actions/tasks.action';
+import { TaskListType } from '../../../models/enums/taskListType.enum';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,8 +17,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
   projects!: TaskList[];
   addingList: boolean = false;
   private destroy$ = new Subject<void>();
+  createListForm = this.fb.nonNullable.group({
+    title: this.fb.control('', [Validators.required]),
+  });
 
-  constructor() {}
+  constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit(): void {
     this.bootstrap();
@@ -35,5 +40,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   onAddList(): void {
     this.addingList = !this.addingList;
+  }
+
+  onCreateProject() {
+    const nameOfProject = this.createListForm.value.title;
+    if (nameOfProject) {
+      const newProject = new TaskList(nameOfProject, [], TaskListType.Normal);
+      this.store.dispatch(new AddTaskList(newProject));
+      this.addingList = false;
+      this.createListForm.reset();
+    }
   }
 }
