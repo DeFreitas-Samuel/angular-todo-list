@@ -4,7 +4,7 @@
     <button class="add-button" (click)="onAddList()">Add</button>
   </div>
 
-  <div *ngIf="!addingList">
+  <div *ngIf="addingList">
     <form
       class="project-creation-form"
       [formGroup]="createListForm"
